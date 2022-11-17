@@ -1,0 +1,43 @@
+name: sharing-artifacts-btw-jobs
+on: [push]
+jobs:
+  job1:
+    runs-on: [ubuntu-latest]
+    container: docker://dvcorg/cml-py3:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: 'Train my model'
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Your ML workflow goes here
+          #pip install -r requirements.txt
+          #python model.py
+          
+          echo "## Model Metrics" > metrics.txt
+          cat metrics.txt >> report.md
+          
+      - uses: actions/upload-artifact@v3
+        with:
+          name: my-report-artifact
+          path: metrics.txt
+  
+  job2:
+      runs-on: [ubuntu-latest]
+      container: docker://dvcorg/cml-py3:latest
+      steps:
+        - uses: actions/checkout@v2
+        
+        - uses: actions/download-artifact@v3
+          with:
+            name: my-artifact
+            
+        - name: 'Train my model'
+          env:
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
+          run: |
+            python read_artifact.py
+            echo "## Model Metrics" > report.md
+            cat metrics.txt >> report.md
+
+        

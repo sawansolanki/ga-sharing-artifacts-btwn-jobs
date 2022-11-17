@@ -32,22 +32,21 @@ jobs:
       steps:
         - uses: actions/checkout@v2
         
-        - uses: actions/download-artifact@v3
-#           id: download
-#           with:
-#             name: my-report-artifact
-#not mentioning the name of artifacts will result in download all artifacts in the workflow
+        - name: Download math result for job 1
+          uses: actions/download-artifact@v3
+          with:
+            name: my-report-artifact
         
         - name: 'Echo download path'
           run: echo ${{steps.download.outputs.download-path}}
             
             
-        - name: 'Train my model'
-          env:
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
-          run: |
-            python read_artifact.py
-            echo "## Model Metrics" > report.md
-            cat metrics.txt >> report.md
+#         - name: 'Train my model'
+#           env:
+#             repo_token: ${{ secrets.GITHUB_TOKEN }}
+#           run: |
+#             python read_artifact.py
+#             echo "## Model Metrics" > report.md
+#             cat metrics.txt >> report.md
 
         

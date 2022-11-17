@@ -31,12 +31,13 @@ jobs:
         
         - uses: actions/download-artifact@v3
           with:
-            name: my-artifact
+            name: my-report-artifact
             
         - name: 'Train my model'
           env:
             repo_token: ${{ secrets.GITHUB_TOKEN }}
           run: |
+            unzip my-report-artifact.zip
             python read_artifact.py
             echo "## Model Metrics" > report.md
             cat metrics.txt >> report.md

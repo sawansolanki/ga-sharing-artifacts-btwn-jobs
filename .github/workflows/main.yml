@@ -32,7 +32,7 @@ jobs:
       steps:
         - uses: actions/checkout@v2
         
-        - name: Download math result for job 1
+        - name: download report artifacts
           uses: actions/download-artifact@v3
           with:
             name: my-report-artifact
@@ -41,12 +41,12 @@ jobs:
           run: echo ${{steps.download.outputs.download-path}}
             
             
-#         - name: 'Train my model'
-#           env:
-#             repo_token: ${{ secrets.GITHUB_TOKEN }}
-#           run: |
-#             python read_artifact.py
-#             echo "## Model Metrics" > report.md
-#             cat metrics.txt >> report.md
+        - name: 'Train my model'
+          env:
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
+          run: |
+            cat metrics.txt
+            python read_artifact.py
+            
 
         

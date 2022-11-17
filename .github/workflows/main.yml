@@ -46,7 +46,6 @@ jobs:
           env:
             repo_token: ${{ secrets.GITHUB_TOKEN }}
           run: |
-            unzip my-report-artifact*.zip
             python read_artifact.py
             echo "## Model Metrics" > report.md
             cat metrics.txt >> report.md

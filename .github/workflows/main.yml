@@ -14,13 +14,13 @@ jobs:
           #pip install -r requirements.txt
           #python model.py
           
-          echo "## Model Metrics" > metrics.txt
+          echo "## Model Metrics" >> metrics.txt
           cat metrics.txt >> report.md
           
       - uses: actions/upload-artifact@v3
         with:
           name: my-report-artifact
-          path: /metrics.txt
+          path: metrics.txt
           
 #       - name: 'Echo upload path'
 #         run: echo ${{steps.upload.outputs.upload-path}}
